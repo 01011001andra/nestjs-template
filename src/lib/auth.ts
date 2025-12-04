@@ -27,10 +27,21 @@ export const auth = betterAuth({
     google: {
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      redirectURI: 'http://localhost:8010/api/auth/callback/google',
     },
   },
   session: {
     expiresIn: 60 * 60 * 24 * 7,
     updateAge: 60 * 60 * 24,
+  },
+  advanced: {
+    cookies: {
+      session_token: {
+        attributes: {
+          httpOnly: false,
+          secure: false,
+        },
+      },
+    },
   },
 });
