@@ -5,178 +5,73 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
-  // output   = "../generated/prisma"
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+  // moduleFormat = "cjs"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
 }
 
 model User {
-     id                  String              @id @default(uuid())
-     name                String
-     email               String              @unique
-     password            String
-     image               String?
-     transaction         Transaction[]
-     summary             Summary[]
-     category            Category[]
-     targetAmount        IncomeTarget?
-     n8n                 N8N?
-     updatedAt           DateTime            @updatedAt
-     createdAt           DateTime            @default(now())
+  id            String    @id @default(uuid())
+  name          String
+  email         String    @unique
+  image         String?
+  updatedAt     DateTime  @updatedAt
+  createdAt     DateTime  @default(now())
+  emailVerified Boolean   @default(false)
+  sessions      Session[]
+  accounts      Account[]
+
+  @@map("user")
 }
 
-model N8N {
-     id                  String              @id @default(uuid())
-     telegramId          String?             @unique
-     userId              String              @unique
-     user                User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([token])
+  @@index([userId])
+  @@map("session")
 }
 
-model Category {
-     id                  String              @id @default(uuid())
-     name                String              @unique
-     userId              String
-     transaction         Transaction[]
-     user                User                @relation(fields: [userId], references: [id], onDelete: Cascade)
-     updatedAt           DateTime            @updatedAt
-     createdAt           DateTime            @default(now())
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@index([userId])
+  @@map("account")
 }
 
-model Transaction {
-     id                  String              @id @default(uuid())
-     title               String
-     userId              String
-     type                TransactionType
-     categoryId          String
-     amount              Decimal  @db.Decimal(20, 0)
-     note                String?
-     transactionDate     DateTime
-     user                User                @relation(fields: [userId], references: [id], onDelete: Cascade)
-     category            Category            @relation(fields: [categoryId], references: [id])
-     updatedAt           DateTime            @updatedAt
-     createdAt           DateTime            @default(now())
-     deletedAt           DateTime? 
+model Verification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([identifier])
+  @@map("verification")
 }
-
-model Summary {
-    id            String          @id @default(uuid())
-    userId        String
-    user          User            @relation(fields: [userId], references: [id], onDelete: Cascade)
-    period        Period          // Enum untuk menentukan periode: Harian, Mingguan, Bulanan, Tahunan
-    startDate     DateTime        // Tanggal mulai periode (misalnya, tanggal pertama bulan)
-    endDate       DateTime        // Tanggal akhir periode (misalnya, tanggal terakhir bulan)
-    updatedAt     DateTime        @updatedAt
-    createdAt     DateTime        @default(now())
-}
-
-model IncomeTarget {
-    id              String           @id @default(uuid())
-    dailyTarget     Int?
-    weeklyTarget    Int?
-    monthlyTarget   Int?
-    yearlyTarget    Int?
-    userId          String           @unique
-    updatedAt       DateTime         @updatedAt
-    createdAt       DateTime         @default(now())
-
-    user          User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
-enum Period {
-  DAILY     // Harian
-  WEEKLY    // Mingguan
-  MONTHLY   // Bulanan
-  YEARLY    // Tahunan
-}
-
-
-
-enum TransactionType {
-  INCOME
-  EXPENSE
-}
-
-// model Post {
-//      id            String        @id @default(uuid())
-//      title         String
-//      content       String
-//      tags          PostTag[]
-//      updatedAt     DateTime      @updatedAt
-//      createdAt     DateTime      @default(now())
-// }
-
-// model Tag {
-//      id            String        @id @default(uuid())
-//      name          String
-//      post          PostTag[]
-//      updatedAt     DateTime      @updatedAt
-//      createdAt     DateTime      @default(now())
-// }
-// model PostTag {
-//      id        String        @id @default(uuid())
-//      postId    String
-//      tagId     String
-//      post      Post      @relation(fields: [postId], references: [id])
-//      tag       Tag       @relation(fields: [tagId], references: [id])
-//      updatedAt     DateTime      @updatedAt
-//      createdAt     DateTime      @default(now())
-     
-//      @@unique([postId, tagId]) 
-// }
-
-
-
-
-
-
-
-// ignore model below
-
-// model Product {
-//     id            String        @id @default(uuid())
-//     slug          String        @unique
-//     name          String        @unique
-//     price         Float
-//     sale          Boolean       @default(false)
-//     availibility  Availibility
-//     description   Description?
-//     reviews       Review[]
-//     tags          Tag[]
-//     createdAt     DateTime      @default(now())
-//     updatedAt     DateTime      @updatedAt
-// }
-
-// model Description {
-//     id            String        @id @default(uuid())
-//     content       String
-//     product       Product       @relation(fields: [productId], references: [id])
-//     productId     String        @unique
-//     createdAt     DateTime      @default(now())
-//     updatedAt     DateTime      @updatedAt
-// }
-
-// model Review {
-//     id            String        @id @default(uuid())
-//     title         String        
-//     content       String
-//     rating        Int
-//     product       Product       @relation(fields: [productId], references: [id])
-//     productId     String
-//     createdAt     DateTime      @default(now())
-//     updatedAt     DateTime      @updatedAt
-// }
-
-// model Tag {
-//     id            String        @id @default(uuid())
-//     content       String
-//     products      Product[]
-// }
-
-// enum Availibility {
-//     IN_STORE
-//     ONLINE
-// }

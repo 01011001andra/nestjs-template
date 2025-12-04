@@ -1,33 +1,50 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
-import { LoginDto } from './dto/login.dto';
+// src/auth/auth.controller.ts
+import { Body, Controller, Get, Post, Req, Res } from '@nestjs/common';
+import {
+  AllowAnonymous,
+  OptionalAuth,
+  Session,
+  UserSession,
+} from '@thallesp/nestjs-better-auth';
+import type { Request, Response as ExpressResponse } from 'express';
 import { AuthService } from './auth.service';
-import { RegisterDto } from './dto/register.dto';
-import { Request } from 'express';
-import { JwtAuthGuard } from '../common/guards/jwt.guard';
+import { SignUpDto } from './dto/signup.dto';
+import { SignInDto } from './dto/signin.dto';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(private readonly authService: AuthService) {}
 
-  @Post('login')
-  login(@Body() authPayload: LoginDto) {
-    return this.authService.login(authPayload);
+  @Post('signup')
+  @AllowAnonymous()
+  signUp(@Body() dto: SignUpDto) {
+    return this.authService.signUp(dto);
   }
 
-  @Post('logout')
-  @UseGuards(JwtAuthGuard)
-  logout() {
-    return this.authService.logout();
+  @Post('signin')
+  @AllowAnonymous()
+  signIn(
+    @Req() req: Request,
+    @Res({ passthrough: true }) res: ExpressResponse,
+    @Body() dto: SignInDto,
+  ) {
+    return this.authService.signIn(req, res, dto);
   }
 
-  @Post('register')
-  register(@Body() authPayload: RegisterDto) {
-    return this.authService.register(authPayload);
+  @Get('me')
+  getProfile(@Session() session: UserSession) {
+    return this.authService.getProfile(session);
   }
 
-  @Get('initial')
-  @UseGuards(JwtAuthGuard)
-  getInitial(@Req() req: Request) {
-    return this.authService.getInitial(String(req.user?.id));
+  @Get('optional')
+  @OptionalAuth()
+  getOptional(@Session() session: UserSession | null) {
+    return this.authService.getOptional(session);
+  }
+
+  @Get('public')
+  @AllowAnonymous()
+  getPublic() {
+    return this.authService.getPublic();
   }
 }
