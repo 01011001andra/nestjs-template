@@ -35,57 +35,43 @@ export class RbacGuard implements CanActivate {
       throw new UnauthorizedException('User not authenticated');
     }
 
-    const userId = sessionUser.id;
+    // 2. Ambil role dari session (Better Auth)
+    // pastikan Better Auth memang mengisi user.role (additionalFields -> field prisma "role")
+    const roleName = sessionUser.role as string | undefined;
 
-    // 2. Cari ApiResource berdasarkan name di DB
+    if (!roleName) {
+      throw new ForbiddenException('User has no role');
+    }
+
+    // 3. Cari ApiResource berdasarkan name di DB
     const apiResource = await this.prisma.apiResource.findUnique({
       where: { name: permissionName },
     });
 
     if (!apiResource) {
-      // kamu bisa pilih: auto create atau block
+      // bisa juga auto-create di sini kalau mau
       throw new ForbiddenException('API resource not registered');
     }
 
     const apiResourceId = apiResource.id;
 
-    // 3. Cek override per user dulu (UserApiPermission)
-    const userPermission = await this.prisma.userApiPermission.findUnique({
-      where: {
-        userId_apiResourceId: {
-          userId,
-          apiResourceId,
-        },
-      },
-    });
-
-    if (userPermission) {
-      if (!userPermission.allow) {
-        throw new ForbiddenException('Access denied (user override)');
-      }
-      return true; // user override allow
-    }
-
-    // 4. Kalau tidak ada override, cek via Role
-    const userRoles = await this.prisma.userRole.findMany({
-      where: { userId },
-      include: {
-        role: {
-          include: {
-            apiPermissions: {
-              where: { apiResourceId },
+    if (apiResource?.isProtected) {
+      // 4. Cek via Role SAJA (tanpa user override)
+      const role = await this.prisma.role.findUnique({
+        where: { name: roleName },
+        include: {
+          apiPermissions: {
+            where: {
+              apiResourceId,
+              allow: true,
             },
           },
         },
-      },
-    });
+      });
 
-    const isAllowedByRole = userRoles.some((ur) =>
-      ur.role.apiPermissions.some((p) => p.allow),
-    );
-
-    if (!isAllowedByRole) {
-      throw new ForbiddenException('Access denied (role based)');
+      if (!role || role.apiPermissions.length === 0) {
+        throw new ForbiddenException('Access denied (role based)');
+      }
     }
 
     return true;

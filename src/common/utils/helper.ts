@@ -73,7 +73,7 @@ export function formatPercentMax3Digits(n: Prisma.Decimal | null): number {
 }
 
 export const PrismaDecimal = (v: Prisma.Decimal | null | undefined) =>
-  new Prisma.Decimal(v ?? 0);
+  new Prisma.Decimal(v ?? 0)
 
 export function toIsoUtcFromDdMmYyyy(dateStr: string): string {
   const jkt = dayjs.tz(dateStr + ' 00:00', 'DD-MM-YYYY HH:mm', 'Asia/Jakarta');

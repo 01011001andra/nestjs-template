@@ -11,6 +11,8 @@ import { auth } from './lib/auth';
 import { APP_GUARD } from '@nestjs/core';
 import { RbacGuard } from './lib/auth/rbac.guard';
 import { ExampleModule } from './example/example.module';
+import { ApiResourceModule } from './api-resource/api-resource.module';
+import { RolePermissionModule } from './role-permission/role-permission.module';
 
 @Module({
   imports: [
@@ -18,6 +20,8 @@ import { ExampleModule } from './example/example.module';
     DatabaseModule,
     AuthModuleBetterAuth.forRoot({ auth, disableGlobalAuthGuard: true }),
     ExampleModule,
+    ApiResourceModule,
+    RolePermissionModule,
   ],
   controllers: [AppController],
   providers: [

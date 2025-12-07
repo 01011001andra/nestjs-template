@@ -57,10 +57,8 @@ export const ModelName = {
   Verification: 'Verification',
   Example: 'Example',
   Role: 'Role',
-  UserRole: 'UserRole',
   ApiResource: 'ApiResource',
-  RoleApiPermission: 'RoleApiPermission',
-  UserApiPermission: 'UserApiPermission'
+  RoleApiPermission: 'RoleApiPermission'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -161,22 +159,13 @@ export const RoleScalarFieldEnum = {
 export type RoleScalarFieldEnum = (typeof RoleScalarFieldEnum)[keyof typeof RoleScalarFieldEnum]
 
 
-export const UserRoleScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  roleId: 'roleId',
-  createdAt: 'createdAt'
-} as const
-
-export type UserRoleScalarFieldEnum = (typeof UserRoleScalarFieldEnum)[keyof typeof UserRoleScalarFieldEnum]
-
-
 export const ApiResourceScalarFieldEnum = {
   id: 'id',
   name: 'name',
   method: 'method',
   path: 'path',
   description: 'description',
+  group: 'group',
   isProtected: 'isProtected',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -195,18 +184,6 @@ export const RoleApiPermissionScalarFieldEnum = {
 } as const
 
 export type RoleApiPermissionScalarFieldEnum = (typeof RoleApiPermissionScalarFieldEnum)[keyof typeof RoleApiPermissionScalarFieldEnum]
-
-
-export const UserApiPermissionScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  apiResourceId: 'apiResourceId',
-  allow: 'allow',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type UserApiPermissionScalarFieldEnum = (typeof UserApiPermissionScalarFieldEnum)[keyof typeof UserApiPermissionScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -36,6 +36,12 @@ export class ExampleController {
     return this.exampleService.create(dto);
   }
 
+  @Post('set-role')
+  @Permission('example:set-role')
+  setRoleForSomething(@Body() dto: any) {
+    return 'success';
+  }
+
   @Patch(':id')
   @Permission('example:update')
   update(

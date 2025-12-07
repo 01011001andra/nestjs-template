@@ -1,5 +1,5 @@
 // src/auth/auth.service.ts
-import { Injectable } from '@nestjs/common';
+import { BadGatewayException, Injectable } from '@nestjs/common';
 import type { Request, Response as ExpressResponse } from 'express';
 import { fromNodeHeaders } from 'better-auth/node';
 import { auth } from 'src/lib/auth';
@@ -10,12 +10,13 @@ import { SignInDto } from './dto/signin.dto';
 @Injectable()
 export class AuthService {
   async signUp(body: SignUpDto) {
-    const { user } = await auth.api.createUser({
+    // console.log(body.role);
+    // return;
+    const { user } = await auth.api.signUpEmail({
       body: {
         email: body.email,
         password: body.password,
         name: body.email,
-        role: body.role as 'admin',
       },
     });
 

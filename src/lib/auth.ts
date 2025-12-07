@@ -8,7 +8,6 @@ import { PrismaClient } from '../generated/prisma/client';
 // kalau pakai default (tanpa output), pakai: import { PrismaClient } from '@prisma/client';
 
 import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3';
-import { admin } from 'better-auth/plugins';
 
 const adapter = new PrismaBetterSqlite3({
   // sama dengan DATABASE_URL kamu
@@ -35,11 +34,10 @@ export const auth = betterAuth({
     expiresIn: 60 * 60 * 24 * 7,
     updateAge: 60 * 60 * 24,
   },
-  plugins: [admin()],
   user: {
     additionalFields: {
       role: {
-        type: ['user', 'admin', 'superAdmin'],
+        type: 'string',
         input: false,
       },
     },

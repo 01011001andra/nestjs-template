@@ -48,11 +48,6 @@ export type Example = Prisma.ExampleModel
  */
 export type Role = Prisma.RoleModel
 /**
- * Model UserRole
- * 
- */
-export type UserRole = Prisma.UserRoleModel
-/**
  * Model ApiResource
  * 
  */
@@ -62,8 +57,3 @@ export type ApiResource = Prisma.ApiResourceModel
  * 
  */
 export type RoleApiPermission = Prisma.RoleApiPermissionModel
-/**
- * Model UserApiPermission
- * 
- */
-export type UserApiPermission = Prisma.UserApiPermissionModel

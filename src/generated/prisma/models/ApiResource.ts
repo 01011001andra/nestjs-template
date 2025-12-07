@@ -30,6 +30,7 @@ export type ApiResourceMinAggregateOutputType = {
   method: $Enums.HttpMethod | null
   path: string | null
   description: string | null
+  group: string | null
   isProtected: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -41,6 +42,7 @@ export type ApiResourceMaxAggregateOutputType = {
   method: $Enums.HttpMethod | null
   path: string | null
   description: string | null
+  group: string | null
   isProtected: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -52,6 +54,7 @@ export type ApiResourceCountAggregateOutputType = {
   method: number
   path: number
   description: number
+  group: number
   isProtected: number
   createdAt: number
   updatedAt: number
@@ -65,6 +68,7 @@ export type ApiResourceMinAggregateInputType = {
   method?: true
   path?: true
   description?: true
+  group?: true
   isProtected?: true
   createdAt?: true
   updatedAt?: true
@@ -76,6 +80,7 @@ export type ApiResourceMaxAggregateInputType = {
   method?: true
   path?: true
   description?: true
+  group?: true
   isProtected?: true
   createdAt?: true
   updatedAt?: true
@@ -87,6 +92,7 @@ export type ApiResourceCountAggregateInputType = {
   method?: true
   path?: true
   description?: true
+  group?: true
   isProtected?: true
   createdAt?: true
   updatedAt?: true
@@ -171,6 +177,7 @@ export type ApiResourceGroupByOutputType = {
   method: $Enums.HttpMethod
   path: string
   description: string | null
+  group: string | null
   isProtected: boolean
   createdAt: Date
   updatedAt: Date
@@ -203,11 +210,11 @@ export type ApiResourceWhereInput = {
   method?: Prisma.EnumHttpMethodFilter<"ApiResource"> | $Enums.HttpMethod
   path?: Prisma.StringFilter<"ApiResource"> | string
   description?: Prisma.StringNullableFilter<"ApiResource"> | string | null
+  group?: Prisma.StringNullableFilter<"ApiResource"> | string | null
   isProtected?: Prisma.BoolFilter<"ApiResource"> | boolean
   createdAt?: Prisma.DateTimeFilter<"ApiResource"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ApiResource"> | Date | string
   rolePermissions?: Prisma.RoleApiPermissionListRelationFilter
-  userPermissions?: Prisma.UserApiPermissionListRelationFilter
 }
 
 export type ApiResourceOrderByWithRelationInput = {
@@ -216,11 +223,11 @@ export type ApiResourceOrderByWithRelationInput = {
   method?: Prisma.SortOrder
   path?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
+  group?: Prisma.SortOrderInput | Prisma.SortOrder
   isProtected?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   rolePermissions?: Prisma.RoleApiPermissionOrderByRelationAggregateInput
-  userPermissions?: Prisma.UserApiPermissionOrderByRelationAggregateInput
 }
 
 export type ApiResourceWhereUniqueInput = Prisma.AtLeast<{
@@ -233,11 +240,11 @@ export type ApiResourceWhereUniqueInput = Prisma.AtLeast<{
   method?: Prisma.EnumHttpMethodFilter<"ApiResource"> | $Enums.HttpMethod
   path?: Prisma.StringFilter<"ApiResource"> | string
   description?: Prisma.StringNullableFilter<"ApiResource"> | string | null
+  group?: Prisma.StringNullableFilter<"ApiResource"> | string | null
   isProtected?: Prisma.BoolFilter<"ApiResource"> | boolean
   createdAt?: Prisma.DateTimeFilter<"ApiResource"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ApiResource"> | Date | string
   rolePermissions?: Prisma.RoleApiPermissionListRelationFilter
-  userPermissions?: Prisma.UserApiPermissionListRelationFilter
 }, "id" | "name" | "method_path">
 
 export type ApiResourceOrderByWithAggregationInput = {
@@ -246,6 +253,7 @@ export type ApiResourceOrderByWithAggregationInput = {
   method?: Prisma.SortOrder
   path?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
+  group?: Prisma.SortOrderInput | Prisma.SortOrder
   isProtected?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -263,6 +271,7 @@ export type ApiResourceScalarWhereWithAggregatesInput = {
   method?: Prisma.EnumHttpMethodWithAggregatesFilter<"ApiResource"> | $Enums.HttpMethod
   path?: Prisma.StringWithAggregatesFilter<"ApiResource"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"ApiResource"> | string | null
+  group?: Prisma.StringNullableWithAggregatesFilter<"ApiResource"> | string | null
   isProtected?: Prisma.BoolWithAggregatesFilter<"ApiResource"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"ApiResource"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"ApiResource"> | Date | string
@@ -274,11 +283,11 @@ export type ApiResourceCreateInput = {
   method: $Enums.HttpMethod
   path: string
   description?: string | null
+  group?: string | null
   isProtected?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   rolePermissions?: Prisma.RoleApiPermissionCreateNestedManyWithoutApiResourceInput
-  userPermissions?: Prisma.UserApiPermissionCreateNestedManyWithoutApiResourceInput
 }
 
 export type ApiResourceUncheckedCreateInput = {
@@ -287,11 +296,11 @@ export type ApiResourceUncheckedCreateInput = {
   method: $Enums.HttpMethod
   path: string
   description?: string | null
+  group?: string | null
   isProtected?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   rolePermissions?: Prisma.RoleApiPermissionUncheckedCreateNestedManyWithoutApiResourceInput
-  userPermissions?: Prisma.UserApiPermissionUncheckedCreateNestedManyWithoutApiResourceInput
 }
 
 export type ApiResourceUpdateInput = {
@@ -300,11 +309,11 @@ export type ApiResourceUpdateInput = {
   method?: Prisma.EnumHttpMethodFieldUpdateOperationsInput | $Enums.HttpMethod
   path?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  group?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isProtected?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   rolePermissions?: Prisma.RoleApiPermissionUpdateManyWithoutApiResourceNestedInput
-  userPermissions?: Prisma.UserApiPermissionUpdateManyWithoutApiResourceNestedInput
 }
 
 export type ApiResourceUncheckedUpdateInput = {
@@ -313,11 +322,11 @@ export type ApiResourceUncheckedUpdateInput = {
   method?: Prisma.EnumHttpMethodFieldUpdateOperationsInput | $Enums.HttpMethod
   path?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  group?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isProtected?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   rolePermissions?: Prisma.RoleApiPermissionUncheckedUpdateManyWithoutApiResourceNestedInput
-  userPermissions?: Prisma.UserApiPermissionUncheckedUpdateManyWithoutApiResourceNestedInput
 }
 
 export type ApiResourceCreateManyInput = {
@@ -326,6 +335,7 @@ export type ApiResourceCreateManyInput = {
   method: $Enums.HttpMethod
   path: string
   description?: string | null
+  group?: string | null
   isProtected?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -337,6 +347,7 @@ export type ApiResourceUpdateManyMutationInput = {
   method?: Prisma.EnumHttpMethodFieldUpdateOperationsInput | $Enums.HttpMethod
   path?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  group?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isProtected?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -348,6 +359,7 @@ export type ApiResourceUncheckedUpdateManyInput = {
   method?: Prisma.EnumHttpMethodFieldUpdateOperationsInput | $Enums.HttpMethod
   path?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  group?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isProtected?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -364,6 +376,7 @@ export type ApiResourceCountOrderByAggregateInput = {
   method?: Prisma.SortOrder
   path?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  group?: Prisma.SortOrder
   isProtected?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -375,6 +388,7 @@ export type ApiResourceMaxOrderByAggregateInput = {
   method?: Prisma.SortOrder
   path?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  group?: Prisma.SortOrder
   isProtected?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -386,6 +400,7 @@ export type ApiResourceMinOrderByAggregateInput = {
   method?: Prisma.SortOrder
   path?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  group?: Prisma.SortOrder
   isProtected?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -414,30 +429,16 @@ export type ApiResourceUpdateOneRequiredWithoutRolePermissionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ApiResourceUpdateToOneWithWhereWithoutRolePermissionsInput, Prisma.ApiResourceUpdateWithoutRolePermissionsInput>, Prisma.ApiResourceUncheckedUpdateWithoutRolePermissionsInput>
 }
 
-export type ApiResourceCreateNestedOneWithoutUserPermissionsInput = {
-  create?: Prisma.XOR<Prisma.ApiResourceCreateWithoutUserPermissionsInput, Prisma.ApiResourceUncheckedCreateWithoutUserPermissionsInput>
-  connectOrCreate?: Prisma.ApiResourceCreateOrConnectWithoutUserPermissionsInput
-  connect?: Prisma.ApiResourceWhereUniqueInput
-}
-
-export type ApiResourceUpdateOneRequiredWithoutUserPermissionsNestedInput = {
-  create?: Prisma.XOR<Prisma.ApiResourceCreateWithoutUserPermissionsInput, Prisma.ApiResourceUncheckedCreateWithoutUserPermissionsInput>
-  connectOrCreate?: Prisma.ApiResourceCreateOrConnectWithoutUserPermissionsInput
-  upsert?: Prisma.ApiResourceUpsertWithoutUserPermissionsInput
-  connect?: Prisma.ApiResourceWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ApiResourceUpdateToOneWithWhereWithoutUserPermissionsInput, Prisma.ApiResourceUpdateWithoutUserPermissionsInput>, Prisma.ApiResourceUncheckedUpdateWithoutUserPermissionsInput>
-}
-
 export type ApiResourceCreateWithoutRolePermissionsInput = {
   id?: string
   name: string
   method: $Enums.HttpMethod
   path: string
   description?: string | null
+  group?: string | null
   isProtected?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  userPermissions?: Prisma.UserApiPermissionCreateNestedManyWithoutApiResourceInput
 }
 
 export type ApiResourceUncheckedCreateWithoutRolePermissionsInput = {
@@ -446,10 +447,10 @@ export type ApiResourceUncheckedCreateWithoutRolePermissionsInput = {
   method: $Enums.HttpMethod
   path: string
   description?: string | null
+  group?: string | null
   isProtected?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  userPermissions?: Prisma.UserApiPermissionUncheckedCreateNestedManyWithoutApiResourceInput
 }
 
 export type ApiResourceCreateOrConnectWithoutRolePermissionsInput = {
@@ -474,10 +475,10 @@ export type ApiResourceUpdateWithoutRolePermissionsInput = {
   method?: Prisma.EnumHttpMethodFieldUpdateOperationsInput | $Enums.HttpMethod
   path?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  group?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isProtected?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userPermissions?: Prisma.UserApiPermissionUpdateManyWithoutApiResourceNestedInput
 }
 
 export type ApiResourceUncheckedUpdateWithoutRolePermissionsInput = {
@@ -486,74 +487,10 @@ export type ApiResourceUncheckedUpdateWithoutRolePermissionsInput = {
   method?: Prisma.EnumHttpMethodFieldUpdateOperationsInput | $Enums.HttpMethod
   path?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  group?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isProtected?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userPermissions?: Prisma.UserApiPermissionUncheckedUpdateManyWithoutApiResourceNestedInput
-}
-
-export type ApiResourceCreateWithoutUserPermissionsInput = {
-  id?: string
-  name: string
-  method: $Enums.HttpMethod
-  path: string
-  description?: string | null
-  isProtected?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  rolePermissions?: Prisma.RoleApiPermissionCreateNestedManyWithoutApiResourceInput
-}
-
-export type ApiResourceUncheckedCreateWithoutUserPermissionsInput = {
-  id?: string
-  name: string
-  method: $Enums.HttpMethod
-  path: string
-  description?: string | null
-  isProtected?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  rolePermissions?: Prisma.RoleApiPermissionUncheckedCreateNestedManyWithoutApiResourceInput
-}
-
-export type ApiResourceCreateOrConnectWithoutUserPermissionsInput = {
-  where: Prisma.ApiResourceWhereUniqueInput
-  create: Prisma.XOR<Prisma.ApiResourceCreateWithoutUserPermissionsInput, Prisma.ApiResourceUncheckedCreateWithoutUserPermissionsInput>
-}
-
-export type ApiResourceUpsertWithoutUserPermissionsInput = {
-  update: Prisma.XOR<Prisma.ApiResourceUpdateWithoutUserPermissionsInput, Prisma.ApiResourceUncheckedUpdateWithoutUserPermissionsInput>
-  create: Prisma.XOR<Prisma.ApiResourceCreateWithoutUserPermissionsInput, Prisma.ApiResourceUncheckedCreateWithoutUserPermissionsInput>
-  where?: Prisma.ApiResourceWhereInput
-}
-
-export type ApiResourceUpdateToOneWithWhereWithoutUserPermissionsInput = {
-  where?: Prisma.ApiResourceWhereInput
-  data: Prisma.XOR<Prisma.ApiResourceUpdateWithoutUserPermissionsInput, Prisma.ApiResourceUncheckedUpdateWithoutUserPermissionsInput>
-}
-
-export type ApiResourceUpdateWithoutUserPermissionsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  method?: Prisma.EnumHttpMethodFieldUpdateOperationsInput | $Enums.HttpMethod
-  path?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isProtected?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  rolePermissions?: Prisma.RoleApiPermissionUpdateManyWithoutApiResourceNestedInput
-}
-
-export type ApiResourceUncheckedUpdateWithoutUserPermissionsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  method?: Prisma.EnumHttpMethodFieldUpdateOperationsInput | $Enums.HttpMethod
-  path?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isProtected?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  rolePermissions?: Prisma.RoleApiPermissionUncheckedUpdateManyWithoutApiResourceNestedInput
 }
 
 
@@ -563,12 +500,10 @@ export type ApiResourceUncheckedUpdateWithoutUserPermissionsInput = {
 
 export type ApiResourceCountOutputType = {
   rolePermissions: number
-  userPermissions: number
 }
 
 export type ApiResourceCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   rolePermissions?: boolean | ApiResourceCountOutputTypeCountRolePermissionsArgs
-  userPermissions?: boolean | ApiResourceCountOutputTypeCountUserPermissionsArgs
 }
 
 /**
@@ -588,13 +523,6 @@ export type ApiResourceCountOutputTypeCountRolePermissionsArgs<ExtArgs extends r
   where?: Prisma.RoleApiPermissionWhereInput
 }
 
-/**
- * ApiResourceCountOutputType without action
- */
-export type ApiResourceCountOutputTypeCountUserPermissionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.UserApiPermissionWhereInput
-}
-
 
 export type ApiResourceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -602,11 +530,11 @@ export type ApiResourceSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   method?: boolean
   path?: boolean
   description?: boolean
+  group?: boolean
   isProtected?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   rolePermissions?: boolean | Prisma.ApiResource$rolePermissionsArgs<ExtArgs>
-  userPermissions?: boolean | Prisma.ApiResource$userPermissionsArgs<ExtArgs>
   _count?: boolean | Prisma.ApiResourceCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["apiResource"]>
 
@@ -616,6 +544,7 @@ export type ApiResourceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   method?: boolean
   path?: boolean
   description?: boolean
+  group?: boolean
   isProtected?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -627,6 +556,7 @@ export type ApiResourceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   method?: boolean
   path?: boolean
   description?: boolean
+  group?: boolean
   isProtected?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -638,15 +568,15 @@ export type ApiResourceSelectScalar = {
   method?: boolean
   path?: boolean
   description?: boolean
+  group?: boolean
   isProtected?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ApiResourceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "method" | "path" | "description" | "isProtected" | "createdAt" | "updatedAt", ExtArgs["result"]["apiResource"]>
+export type ApiResourceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "method" | "path" | "description" | "group" | "isProtected" | "createdAt" | "updatedAt", ExtArgs["result"]["apiResource"]>
 export type ApiResourceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   rolePermissions?: boolean | Prisma.ApiResource$rolePermissionsArgs<ExtArgs>
-  userPermissions?: boolean | Prisma.ApiResource$userPermissionsArgs<ExtArgs>
   _count?: boolean | Prisma.ApiResourceCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ApiResourceIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -656,7 +586,6 @@ export type $ApiResourcePayload<ExtArgs extends runtime.Types.Extensions.Interna
   name: "ApiResource"
   objects: {
     rolePermissions: Prisma.$RoleApiPermissionPayload<ExtArgs>[]
-    userPermissions: Prisma.$UserApiPermissionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -664,6 +593,7 @@ export type $ApiResourcePayload<ExtArgs extends runtime.Types.Extensions.Interna
     method: $Enums.HttpMethod
     path: string
     description: string | null
+    group: string | null
     isProtected: boolean
     createdAt: Date
     updatedAt: Date
@@ -1062,7 +992,6 @@ readonly fields: ApiResourceFieldRefs;
 export interface Prisma__ApiResourceClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   rolePermissions<T extends Prisma.ApiResource$rolePermissionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ApiResource$rolePermissionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RoleApiPermissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  userPermissions<T extends Prisma.ApiResource$userPermissionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ApiResource$userPermissionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserApiPermissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1097,6 +1026,7 @@ export interface ApiResourceFieldRefs {
   readonly method: Prisma.FieldRef<"ApiResource", 'HttpMethod'>
   readonly path: Prisma.FieldRef<"ApiResource", 'String'>
   readonly description: Prisma.FieldRef<"ApiResource", 'String'>
+  readonly group: Prisma.FieldRef<"ApiResource", 'String'>
   readonly isProtected: Prisma.FieldRef<"ApiResource", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"ApiResource", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"ApiResource", 'DateTime'>
@@ -1507,30 +1437,6 @@ export type ApiResource$rolePermissionsArgs<ExtArgs extends runtime.Types.Extens
   take?: number
   skip?: number
   distinct?: Prisma.RoleApiPermissionScalarFieldEnum | Prisma.RoleApiPermissionScalarFieldEnum[]
-}
-
-/**
- * ApiResource.userPermissions
- */
-export type ApiResource$userPermissionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the UserApiPermission
-   */
-  select?: Prisma.UserApiPermissionSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the UserApiPermission
-   */
-  omit?: Prisma.UserApiPermissionOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UserApiPermissionInclude<ExtArgs> | null
-  where?: Prisma.UserApiPermissionWhereInput
-  orderBy?: Prisma.UserApiPermissionOrderByWithRelationInput | Prisma.UserApiPermissionOrderByWithRelationInput[]
-  cursor?: Prisma.UserApiPermissionWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.UserApiPermissionScalarFieldEnum | Prisma.UserApiPermissionScalarFieldEnum[]
 }
 
 /**
