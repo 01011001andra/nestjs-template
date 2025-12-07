@@ -54,7 +54,13 @@ export const ModelName = {
   User: 'User',
   Session: 'Session',
   Account: 'Account',
-  Verification: 'Verification'
+  Verification: 'Verification',
+  Example: 'Example',
+  Role: 'Role',
+  UserRole: 'UserRole',
+  ApiResource: 'ApiResource',
+  RoleApiPermission: 'RoleApiPermission',
+  UserApiPermission: 'UserApiPermission'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -77,7 +83,11 @@ export const UserScalarFieldEnum = {
   image: 'image',
   updatedAt: 'updatedAt',
   createdAt: 'createdAt',
-  emailVerified: 'emailVerified'
+  emailVerified: 'emailVerified',
+  role: 'role',
+  banned: 'banned',
+  banReason: 'banReason',
+  banExpires: 'banExpires'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -91,7 +101,8 @@ export const SessionScalarFieldEnum = {
   updatedAt: 'updatedAt',
   ipAddress: 'ipAddress',
   userAgent: 'userAgent',
-  userId: 'userId'
+  userId: 'userId',
+  impersonatedBy: 'impersonatedBy'
 } as const
 
 export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
@@ -126,6 +137,76 @@ export const VerificationScalarFieldEnum = {
 } as const
 
 export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum]
+
+
+export const ExampleScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ExampleScalarFieldEnum = (typeof ExampleScalarFieldEnum)[keyof typeof ExampleScalarFieldEnum]
+
+
+export const RoleScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RoleScalarFieldEnum = (typeof RoleScalarFieldEnum)[keyof typeof RoleScalarFieldEnum]
+
+
+export const UserRoleScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  roleId: 'roleId',
+  createdAt: 'createdAt'
+} as const
+
+export type UserRoleScalarFieldEnum = (typeof UserRoleScalarFieldEnum)[keyof typeof UserRoleScalarFieldEnum]
+
+
+export const ApiResourceScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  method: 'method',
+  path: 'path',
+  description: 'description',
+  isProtected: 'isProtected',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ApiResourceScalarFieldEnum = (typeof ApiResourceScalarFieldEnum)[keyof typeof ApiResourceScalarFieldEnum]
+
+
+export const RoleApiPermissionScalarFieldEnum = {
+  id: 'id',
+  roleId: 'roleId',
+  apiResourceId: 'apiResourceId',
+  allow: 'allow',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RoleApiPermissionScalarFieldEnum = (typeof RoleApiPermissionScalarFieldEnum)[keyof typeof RoleApiPermissionScalarFieldEnum]
+
+
+export const UserApiPermissionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  apiResourceId: 'apiResourceId',
+  allow: 'allow',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UserApiPermissionScalarFieldEnum = (typeof UserApiPermissionScalarFieldEnum)[keyof typeof UserApiPermissionScalarFieldEnum]
 
 
 export const SortOrder = {

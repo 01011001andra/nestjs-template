@@ -4,10 +4,10 @@ import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 import isoWeek from 'dayjs/plugin/isoWeek';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
+import { Prisma } from 'src/generated/prisma/client';
 dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.extend(customParseFormat);
-import { Prisma } from '@prisma/client';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -72,7 +72,7 @@ export function formatPercentMax3Digits(n: Prisma.Decimal | null): number {
   return Number(first3); // 255
 }
 
-export const PrismaDecimal = (v: Prisma.Decimal.Value | null | undefined) =>
+export const PrismaDecimal = (v: Prisma.Decimal | null | undefined) =>
   new Prisma.Decimal(v ?? 0);
 
 export function toIsoUtcFromDdMmYyyy(dateStr: string): string {

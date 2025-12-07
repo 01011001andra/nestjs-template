@@ -1,8 +1,4 @@
-// This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
   provider = "prisma-client"
@@ -14,6 +10,10 @@ datasource db {
   provider = "sqlite"
 }
 
+// =====================
+// AUTH (Better Auth)
+// =====================
+
 model User {
   id            String    @id @default(uuid())
   name          String
@@ -24,6 +24,15 @@ model User {
   emailVerified Boolean   @default(false)
   sessions      Session[]
   accounts      Account[]
+
+  role       String?
+  banned     Boolean?  @default(false)
+  banReason  String?
+  banExpires DateTime?
+
+  // RBAC relations
+  userRoles         UserRole[]
+  userPermissions   UserApiPermission[]
 
   @@map("user")
 }
@@ -38,6 +47,8 @@ model Session {
   userAgent String?
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  impersonatedBy String?
 
   @@unique([token])
   @@index([userId])
@@ -74,4 +85,103 @@ model Verification {
 
   @@index([identifier])
   @@map("verification")
+}
+
+// =====================
+// CONTOH DATA
+// =====================
+
+model Example {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("example")
+}
+
+// =====================
+// RBAC FULL CUSTOM
+// =====================
+
+enum HttpMethod {
+  GET
+  POST
+  PUT
+  PATCH
+  DELETE
+}
+
+model Role {
+  id          String             @id @default(uuid())
+  name        String             @unique          // "user", "admin", "superAdmin", dsb
+  description String?
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+
+  users          UserRole[]
+  apiPermissions RoleApiPermission[]
+
+  @@map("roles")
+}
+
+model UserRole {
+  id        String   @id @default(uuid())
+  userId    String
+  roleId    String
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role Role @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, roleId])
+  @@map("user_roles")
+}
+
+model ApiResource {
+  id          String     @id @default(uuid())
+  name        String     @unique           // contoh: "example:create"
+  method      HttpMethod                  // GET / POST / ...
+  path        String                      // contoh: "/example", "/example/:id"
+  description String?
+  isProtected Boolean    @default(true)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  rolePermissions RoleApiPermission[]
+  userPermissions UserApiPermission[]
+
+  @@unique([method, path])
+  @@map("api_resources")
+}
+
+model RoleApiPermission {
+  id            String      @id @default(uuid())
+  roleId        String
+  apiResourceId String
+  allow         Boolean     @default(true)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  role        Role        @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  apiResource ApiResource @relation(fields: [apiResourceId], references: [id], onDelete: Cascade)
+
+  @@unique([roleId, apiResourceId])
+  @@map("role_api_permissions")
+}
+
+model UserApiPermission {
+  id            String      @id @default(uuid())
+  userId        String
+  apiResourceId String
+  allow         Boolean     @default(true) // true = force allow, false = force deny
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  apiResource ApiResource @relation(fields: [apiResourceId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, apiResourceId])
+  @@map("user_api_permissions")
 }

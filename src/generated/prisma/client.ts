@@ -57,3 +57,33 @@ export type Account = Prisma.AccountModel
  * 
  */
 export type Verification = Prisma.VerificationModel
+/**
+ * Model Example
+ * 
+ */
+export type Example = Prisma.ExampleModel
+/**
+ * Model Role
+ * 
+ */
+export type Role = Prisma.RoleModel
+/**
+ * Model UserRole
+ * 
+ */
+export type UserRole = Prisma.UserRoleModel
+/**
+ * Model ApiResource
+ * 
+ */
+export type ApiResource = Prisma.ApiResourceModel
+/**
+ * Model RoleApiPermission
+ * 
+ */
+export type RoleApiPermission = Prisma.RoleApiPermissionModel
+/**
+ * Model UserApiPermission
+ * 
+ */
+export type UserApiPermission = Prisma.UserApiPermissionModel

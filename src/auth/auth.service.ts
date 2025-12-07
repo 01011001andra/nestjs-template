@@ -10,14 +10,20 @@ import { SignInDto } from './dto/signin.dto';
 @Injectable()
 export class AuthService {
   async signUp(body: SignUpDto) {
-    const { user } = await auth.api.signUpEmail({ body });
+    const { user } = await auth.api.createUser({
+      body: {
+        email: body.email,
+        password: body.password,
+        name: body.email,
+        role: body.role,
+      },
+    });
 
     // data yang umum dipakai
     return {
       user,
     };
   }
-
   async signIn(req: Request, res: ExpressResponse, body: SignInDto) {
     const {
       response: { user },
