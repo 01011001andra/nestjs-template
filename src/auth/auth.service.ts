@@ -2,7 +2,7 @@
 import { Injectable } from '@nestjs/common';
 import type { Request, Response as ExpressResponse } from 'express';
 import { fromNodeHeaders } from 'better-auth/node';
-import { auth } from 'src/lib/auth';
+import { auth } from 'src/lib/auth/auth';
 import type { UserSession } from '@thallesp/nestjs-better-auth';
 import { SignUpDto } from './dto/signup.dto';
 import { SignInDto } from './dto/signin.dto';
@@ -10,7 +10,15 @@ import { SignInDto } from './dto/signin.dto';
 @Injectable()
 export class AuthService {
   async signUp(body: SignUpDto) {
-    const { user } = await auth.api.signUpEmail({ body });
+    const { user } = await auth.api.createUser({
+      body: {
+        email: body.email, // required
+        password: body.password, // required
+        name: body.name, // required
+        role: body.role,
+        // data: { customField: 'customValue' },
+      },
+    });
 
     // data yang umum dipakai
     return {

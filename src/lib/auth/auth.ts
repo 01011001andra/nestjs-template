@@ -1,13 +1,15 @@
 import 'dotenv/config';
 import { betterAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
+import { admin } from 'better-auth/plugins';
 
 // ⚠️ Kalau generator kamu pakai output custom, import dari situ
 // generator client { provider = "prisma-client", output = "../generated/prisma" }
-import { PrismaClient } from '../generated/prisma/client';
+import { PrismaClient } from '../../generated/prisma/client';
 // kalau pakai default (tanpa output), pakai: import { PrismaClient } from '@prisma/client';
 
 import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3';
+import { AppRoleName, roles, ac } from './permissions';
 
 const adapter = new PrismaBetterSqlite3({
   // sama dengan DATABASE_URL kamu
@@ -33,6 +35,21 @@ export const auth = betterAuth({
   session: {
     expiresIn: 60 * 60 * 24 * 7,
     updateAge: 60 * 60 * 24,
+  },
+  plugins: [
+    admin({
+      ac,
+      roles,
+      defaultRole: 'user' as AppRoleName,
+    }),
+  ],
+  user: {
+    additionalFields: {
+      role: {
+        type: ['user', 'admin', 'superAdmin'],
+        input: false,
+      },
+    },
   },
   advanced: {
     cookies: {

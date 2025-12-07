@@ -6,7 +6,15 @@ import {
   IsString,
   MinLength,
   IsUrl,
+  IsEnum,
 } from 'class-validator';
+
+export enum RoleEnum {
+  USER = 'user',
+  ADMIN = 'admin',
+  SUPER_ADMIN = 'superAdmin',
+}
+export type RoleName = `${RoleEnum}`;
 
 export class SignUpDto {
   @IsString()
@@ -24,6 +32,8 @@ export class SignUpDto {
   image?: string;
 
   @IsOptional()
-  @IsString()
-  callbackURL?: string;
+  @IsEnum(['user', 'admin', 'superAdmin'], {
+    message: 'role must be user | admin | superAdmin',
+  })
+  role?: RoleName;
 }
