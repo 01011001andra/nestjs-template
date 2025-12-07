@@ -15,7 +15,7 @@ export class AuthService {
         email: body.email,
         password: body.password,
         name: body.email,
-        role: body.role,
+        role: body.role as 'admin',
       },
     });
 

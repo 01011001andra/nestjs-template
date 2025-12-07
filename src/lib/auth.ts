@@ -36,6 +36,14 @@ export const auth = betterAuth({
     updateAge: 60 * 60 * 24,
   },
   plugins: [admin()],
+  user: {
+    additionalFields: {
+      role: {
+        type: ['user', 'admin', 'superAdmin'],
+        input: false,
+      },
+    },
+  },
   advanced: {
     cookies: {
       session_token: {
